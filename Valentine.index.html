@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Be My Valentine? 💕</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body { box-sizing: border-box; }
+    .font-pacifico { font-family: 'Pacifico', cursive; }
+    .font-quicksand { font-family: 'Quicksand', sans-serif; }
+    @keyframes float { 0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)} }
+    @keyframes pulse-heart { 0%,100%{transform:scale(1)}50%{transform:scale(1.1)} }
+    .float-animation { animation: float 3s ease-in-out infinite; }
+    .pulse-heart { animation: pulse-heart 1s infinite; }
+    .no-btn { transition: all 0.1s ease; }
+  </style>
+</head>
+
+<body class="h-full font-quicksand" style="background:linear-gradient(135deg,#fce4ec,#f8bbd9,#f48fb1)">
+<div class="min-h-full flex flex-col items-center justify-center p-6">
+
+  <div id="proposal-screen" class="text-center max-w-lg">
+
+    <div class="text-8xl mb-6 pulse-heart">💕</div>
+
+    <h1 id="proposal-question"
+        class="font-pacifico text-4xl md:text-5xl text-pink-800 mb-8">
+      Pooja, will you be my Valentine?
+    </h1>
+
+    <div class="flex gap-4 justify-center relative min-h-[100px]">
+      <button id="yes-btn"
+        class="px-10 py-4 bg-pink-500 text-white text-xl font-bold rounded-full">
+        Yes! 💖
+      </button>
+
+      <button id="no-btn"
+        class="no-btn px-10 py-4 bg-gray-300 text-gray-600 text-xl font-bold rounded-full absolute">
+        No 😢
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Get name from URL
+  function getNameFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('name');
+  }
+
+  const defaultName = "Pooja";
+  const urlName = getNameFromURL();
+  const finalName = urlName ? decodeURIComponent(urlName) : defaultName;
+
+  document.getElementById("proposal-question").textContent =
+    `${finalName}, will you be my Valentine?`;
+
+  // No button escape
+  const noBtn = document.getElementById("no-btn");
+  const container = document.getElementById("proposal-screen");
+
+  function moveButton(e) {
+    const rect = container.getBoundingClientRect();
+    const x = Math.random() * (rect.width - 100) - rect.width / 2;
+    const y = Math.random() * 100 - 50;
+    noBtn.style.transform = `translate(${x}px, ${y}px)`;
+  }
+
+  noBtn.addEventListener("mouseenter", moveButton);
+  noBtn.addEventListener("mousemove", moveButton);
+
+  // Yes button
+  document.getElementById("yes-btn").addEventListener("click", () => {
+    alert("Yay! 💕 I knew you would say Yes!");
+  });
+</script>
+
+</body>
+</html>
